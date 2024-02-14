@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function main() {
-        $title = 'Box news';
+        $title = 'BOX NEWS';
 
         return view('home', compact('title'));
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
@@ -22,6 +23,10 @@ Route::get('/', [HomeController::class, 'main'])->name('home');
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/logOut', [AuthController::class, 'logOut'])->name('logOut');
     
+});
+
+Route::group(['middleware' => ['auth', 'admin']], function() {
+    Route::get('/admin', [AdminController::class, 'admin']);
 });
 
 Route::group(['middleware' => ['guest']], function() {

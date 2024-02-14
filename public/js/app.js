@@ -1,8 +1,10 @@
-window.onload = function() {
+$(document).click(function(e) {
 
-}
-function dropdown($event) {
     var dropdown = document.querySelector('.dropdown-menu');
+    if ($(e.target).closest('.dropdown-toggle').length) {
+        dropdown.classList.toggle('active')
+    } else {
+        dropdown.classList.remove('active')
+    }
+})
 
-    dropdown.classList.toggle('active')
-}

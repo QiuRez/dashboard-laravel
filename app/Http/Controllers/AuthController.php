@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\MessageBag;
 
 class AuthController extends Controller
 {
     public function register() {
-
+        $title = 'Регистрация';
         
-        return view('auth.register');
+        return view('auth.register', compact('title'));
     }
 
     public function PostRegister(Request $request) {
@@ -22,12 +23,23 @@ class AuthController extends Controller
             'username' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
+            'image' => 'image|mimes:jpg,png,jpeg,gif|max:2048'
         ]);
+
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $fileName = time() . random_int(0,255) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/users'), $fileName);
+            $path = 'public/images/users/'. $fileName;
+        } else {
+            $path = 'public/images/users/default.png';
+        }
 
         $user = User::create([
             'username' => $request->input('username'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
+            'UserPhoto' => $path
         ]);
 
         Auth::loginUsingId($user->UserID, $request->boolean('remember'));
