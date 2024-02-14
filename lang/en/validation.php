@@ -181,7 +181,7 @@ return [
 
     'attributes' => [
         'password' => 'пароль',
-        'email' => 'почты'
+        'email' => 'почты',
     ],
 
 ];

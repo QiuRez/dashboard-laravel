@@ -19,20 +19,28 @@ class AuthController extends Controller
 
     public function PostRegister(Request $request) {
 
+        $messages = [
+            'username' => ['unique' => 'Имя пользователя уже занято'],
+            'email' => ['unique' => 'Такая почта уже зарегистрирована', 'email' => 'Недопустимый формат почты'],
+            'password' => ['required' => 'Заполните поле пароля'],
+        ];
+
+            // 'dimensions' => 'Изображение имеет недопустимые размеры.',
+            // 'mimes' => 'Изображение имеет недопустимое расширение. Допустимые: jpg,png,jpeg,gif',
         $credential = $request->validate([
-            'username' => 'required',
+            'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
-            'image' => 'image|mimes:jpg,png,jpeg,gif|max:2048'
-        ]);
+            'image' => 'mimes:jpg,png,jpeg,gif|max:2048|dimensions:min_width=40,min_height=40,max_width=2000,max_height=2000',
+        ], $messages);
 
         if ($request->file('image')) {
             $file = $request->file('image');
             $fileName = time() . random_int(0,255) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images/users'), $fileName);
-            $path = 'public/images/users/'. $fileName;
+            $path = 'images/users/'. $fileName;
         } else {
-            $path = 'public/images/users/default.png';
+            $path = 'images/users/default.png';
         }
 
         $user = User::create([

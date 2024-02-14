@@ -126,7 +126,7 @@ td.has-image {
 	object-fit: cover;
 	max-width: 30px;
 	max-height: 42px;
-	border-radius: 50%;
+	border-radius: 20%;
 }
 
 .user-block__action {
