@@ -8,22 +8,27 @@
     @if ($notFound)
         <h2>Категория не найдена</h2>
     @else
-        @if ($ads = App\Models\Adverisements::where([['CategoryID', $categoryID], ['Status', 'Одобрено']])->get())
-            @foreach ($ads as $ad)
-                <div class="news">
-                    <img src="{{url('/images/ad/sale-products-with-discount_23-2150296289.jpg')}}" alt="" id="featuredico" />
-                    <h3>{{ $ad->Title }}</h3>
-                    <p><p>{{ $ad->Description }}</p></p>
-                    <div class="button__user">
-                        <a href="#" class="readmore">Read more</a>
-                        <div class="user-info">
-                            <p>ЮзерИД{{ $ad->UserID }}</p>
-
+        @if ($ads)
+            <div class="row align-items-start justify-content-around">
+                @foreach ($ads as $ad)
+                    <div class="card">
+                        @if ($ad->AdPhoto)
+                            <div class="img">
+                                <img src="{{ url($ad->AdPhoto) }}" class="card-img-top" alt="...">
+                            </div>
+                        @endif
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $ad->Title }}</h5>
+                            <p class="card-text">{{ $ad->Description }}</p>
+                            <hr>
+                            <div class="d-flex flex-row justify-content-between">
+                                <p>Автор: {{ $ad->user->Username }}</p>
+                                <img src="{{ url($ad->user->UserPhoto) }}" alt="">
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-            @endforeach
+                @endforeach
+            </div>
         @endif
         @if (count($ads) == 0)
             <h2>Объявлений ещё нет</h2>

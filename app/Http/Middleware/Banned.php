@@ -6,14 +6,15 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Admin
+class Banned
 {
+
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->Role == 'Администратор') {
-            return $next($request);
-        } else {
+        if (Auth::user()->Banned) {
             return redirect()->route('home');
+        } else {
+            return $next($request);
         }
     }
 }

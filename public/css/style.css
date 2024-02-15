@@ -113,12 +113,22 @@ td.has-image {
 	flex-direction: column;
 	align-items: center;
 }
-
 .user-block {
 	display: flex;
 	gap: 20px;
 	justify-content: center;
 	align-items: center;
+}
+.user-block a.url-admin-panel {
+	text-decoration: none;
+	color: black;
+	background-color: white;
+	border-radius: 15px;
+	padding: 5px 15px;
+	transition: .3s all;
+}
+.user-block a.url-admin-panel:hover {
+	background-color: rgb(189, 189, 189);
 }
 .user-block img {
 	width: 35px;
@@ -279,20 +289,9 @@ nav li a:hover {
 	border-radius: 3px;
 }
 
-#secwrapper {
-	max-width: 80%;
-	margin: 0 auto;
+.container-xxl {
+	margin: 70px auto 0 auto;
 	flex: 1;
-}
-
-.content {
-	flex-wrap: wrap;
-	gap: 20px;
-	padding: 20px 50px 20px 50px;
-	margin-top: 50px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 
 .news {
@@ -405,7 +404,33 @@ footer p {
 .dropdown-menu.active {
 	display: flex;
 }
+.card-img-top {
+    width: 100%;
+    height: 10vw;
+    object-fit: cover;
+}
+.card {
+	max-width: 280px;
+}
+.card .img {
+	display: flex;
 
+	flex-direction: column;
+}
+.card .card-body > div > img {
+	max-width: 40px;
+	max-height: 45px;
+	width: 100%;
+	height: auto;
+	border-radius: 20%;
+}
+.card .card-body > div {
+	gap: 10px;
+	margin: 10px 0;
+}
+.card .card-body > div > p{
+	max-width: 120px;
+}
 
 
 

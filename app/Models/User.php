@@ -13,6 +13,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function advert() {
+        return $this->hasMany(Adverisements::class, 'UserID', 'AdID');
+    }
+
     protected $fillable = [
         'username',
         'email',
@@ -21,12 +25,6 @@ class User extends Authenticatable
     ];
 
 
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -36,11 +34,6 @@ class User extends Authenticatable
     protected $primaryKey = 'UserID';
     public $timestamps = false;
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

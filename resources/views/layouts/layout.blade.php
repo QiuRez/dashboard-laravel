@@ -16,7 +16,7 @@
 			<h1><a href="{{route('home')}}">Box Press</a></h1>
 			<nav>
 				<ul class="menu">
-					<li><a href="{{route('home')}}" class="current">Home</a></li>
+					<li><a href="{{route('home')}}">Home</a></li>
 					<li class="dropdown-toggle" >Categories</li>
                     <ul class="dropdown-menu">
                         @if($categories = App\Models\Category::all())
@@ -25,6 +25,10 @@
                         @endforeach
                         @endif
                     </ul>
+                    
+                    @if (checkBannedAndAuth())
+                        <li><a href="{{route('ad.create')}}">Добавить объявление</a></li>
+                    @endif
 				</ul>
 			</nav>
             <div class="user-block">
@@ -34,6 +38,9 @@
                     <p>{{$user->Username}}</p>
                     <a href="{{route('logOut')}}">LogOut</a>
                 </div>
+                @if ($user->Role == 'Администратор')
+                <a href="{{route('admin')}}" class="url-admin-panel">Админ-панель</a>
+                @endif
                 @else
                 <div class="auth_or_register">
                     <a href="{{route('register')}}">Зарегистрироваться</a>
@@ -43,11 +50,9 @@
             </div>
             @show
 		</header>
-		<div id="secwrapper">
-            <div class="content">
-                @yield('content')
-            </div>
-		</div>
+        <div class="container-xxl">
+            @yield('content')
+        </div>
 
         @section('footer')
 		<footer>

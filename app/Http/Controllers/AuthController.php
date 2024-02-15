@@ -34,8 +34,7 @@ class AuthController extends Controller
             'image' => 'mimes:jpg,png,jpeg,gif|max:2048|dimensions:min_width=40,min_height=40,max_width=2000,max_height=2000',
         ], $messages);
 
-        if ($request->file('image')) {
-            $file = $request->file('image');
+        if ($file = $request->file('image')) {
             $fileName = time() . random_int(0,255) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images/users'), $fileName);
             $path = 'images/users/'. $fileName;

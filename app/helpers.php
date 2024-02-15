@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 function printAllErrors($errors)
 {
@@ -25,5 +26,16 @@ function printAllErrors($errors)
             }
         }
         echo "</ul>";
+    }
+}
+
+function checkBannedAndAuth() {
+    if (!Auth::check()) {
+        return false;
+    } else {
+        if (Auth::user()->Banned) {
+            return false;
+        }
+        return true;
     }
 }
