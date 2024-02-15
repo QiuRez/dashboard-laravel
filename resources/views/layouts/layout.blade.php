@@ -50,7 +50,7 @@
             </div>
             @show
 		</header>
-        <div class="container-xxl">
+        <div class="container-fluid">
             @yield('content')
         </div>
 

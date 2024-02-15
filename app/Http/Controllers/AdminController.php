@@ -7,6 +7,7 @@ use App\Models\Adverisements;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Client\Response;
 
 class AdminController extends Controller
 {
@@ -58,5 +59,36 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin');
+    }
+
+    public function userEdit(Request $request) {
+
+        $validate = $request->validate([
+            'username' => 'min:2|string',
+            'email' => 'email',
+            'userId'=> 'required'
+        ]);
+
+        $user = User::find($request->input('userId'));
+        $errors = [];
+
+        if ($user->Username != $request->input('username')) {
+            if (!User::firstWhere('Username', $request->input('username'))) {
+                $user->Username = $request->input('username');
+            } else {
+                array_push($errors, ['user' => 'Такое имя пользователя уже есть']);
+            }
+        }
+        if ($user->Email != $request->input('email')) {
+            if (!User::firstWhere('Email', '!=', $request->input('email'))) {
+                $user->Email = $request->input('email');
+            } else {
+                array_push($errors, ['email' => 'Такая почта уже есть']);
+            }
+        }
+        $user->save();
+
+
+        return redirect()->route('admin')->withErrors($errors);
     }
 }

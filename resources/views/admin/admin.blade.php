@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="row align-items-start justify-content-between">
-        <div class="col-md-7">
+        <div class="col-sm-7">
             <div class="d-flex flex-row justify-content-around align-items-start flex-wrap">
                 @if ($ads)
                     @foreach ($ads as $ad)
@@ -34,10 +34,10 @@
             </div>
         </div>
         <div class="col-sm-5">
-            {{printAllErrors($errors)}}
+            {{ printAllErrors($errors) }}
             <div class="mb-3">
                 <form action="{{ route('admin') }}" method="post">
-                @csrf
+                    @csrf
                     <label for="newCategory" class="form-label">Новая категория</label>
                     <input class="form-control mb-2" name="newCategory" type="text" id="newCategory">
                     <button type="submit" class="btn btn-success">Создать</button>
@@ -57,25 +57,38 @@
                     @foreach ($users as $user)
                         <tr class='@if ($user->Banned) table-danger @endif'>
                             <td class="has-image"><img src="{{ $user->UserPhoto }}" alt=""></td>
-                            <td>{{ $user->Username }}</td>
-                            <td>{{ $user->Email }}</td>
-                            <td>{{ $user->Role }}</td>
-                            <td>
-                                @if ($user->Role != 'Администратор')
-                                    @switch($user->Banned)
-                                        @case(false)
-                                            <a href="">Edit</a>
-                                            <a href="{{ route('user.ban', ['userId' => $user->UserID]) }}">Ban</a>
-                                        @break
+                            <form action="{{route('admin.userEdit')}}" method="post">
+                            @csrf
+                                <td>
+                                    <p>{{ $user->Username }}</p>
+                                    <input type="text" name="username" value="{{ $user->Username }}">
+                                </td>
+                                    <input type="hidden" value="{{ $user->UserID }}" name="userId" />
+                                <td>
+                                    <p>{{ $user->Email }}</p>
+                                    <input type="text" name="email" value="{{ $user->Email }}">
+                                </td>
+                                <td class="has-role">{{ $user->Role }}</td>
+                                <td>
+                                    @if ($user->Role != 'Администратор')
+                                        @switch($user->Banned)
+                                            @case(false)
+                                                <button class="button-edit">Confirm</button>
 
-                                        @case(true)
-                                            <a href="{{ route('user.unban', ['userId' => $user->UserID]) }}">Unban</a>
-                                        @break
+                                                <button type="button" class="btn-fake" onclick="userEdit(this)">Edit</button>
+                                                <button type="button" class="btn-cancel" onclick="userEdit(this)">Cancel</button>
 
-                                        @default
-                                    @endswitch
-                                @endif
-                            </td>
+                                                <a class="ban-or-unban" href="{{ route('user.ban', ['userId' => $user->UserID]) }}">Ban</a>
+                                            @break
+
+                                            @case(true)
+                                                <a class="ban-or-unban" href="{{ route('user.unban', ['userId' => $user->UserID]) }}">Unban</a>
+                                            @break
+                                            @default
+                                        @endswitch
+                                    @endif
+                                    </form>
+                                </td>
                         </tr>
                     @endforeach
                 </tbody>
