@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Adverisements;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function category($categoryID) {
         if ($category = Category::firstWhere('CategoryID', $categoryID)) {
-            $ads = Adverisements::with('user')->has('user')->where([['CategoryID', $categoryID], ['Status', 'Одобрено']])->get();
+            
+            $ads = Adverisements::with('user')->Wherehas('user', function(Builder $query) {
+                $query->where('Banned', '!=', '1');
+            })->where([['CategoryID', $categoryID], ['Status', 'Одобрено']])->get();
+
             $notFound = false;
             $title = $category->CategoryName;
         } else {

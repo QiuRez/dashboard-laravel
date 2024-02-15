@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('/admin/ad/approved/{adId}', [AdminController::class, 'approved'])->name('admin.approved');
     Route::get('/admin/user/ban/{userId}', [AdminController::class, 'ban'])->name('user.ban');
     Route::get('/admin/user/unban/{userId}', [AdminController::class, 'unban'])->name('user.unban');
+    Route::post('/admin', [AdminController::class, 'newCategory'])->name('admin.newCategory');
 });
 
 // ВЫХОД

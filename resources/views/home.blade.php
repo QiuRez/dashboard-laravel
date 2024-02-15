@@ -10,15 +10,29 @@
 
 
 @section('content')
-    <div class="news">
-        <img src="" alt="" id="featuredico" />
-        <h1>Varius Gravida Mi Volutpat</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tempor, tortor at vulputate blandit, magna risus
-            posuere turpis, nec cursus ipsum arcu nec felis. Mauris sed lectus dui. Suspendisse enim elit, tempor ac
-            ullamcorper et, eleifend quis sem. Sed euismod sagittis ligula, a imperdiet sapien molestie nec. Curabitur ut
-            eros a justo fermentum vulputate ac sit amet metus.</p>
-        <a href="#" class="readmore">Read more</a>
-    </div>
+    @if ($ads)
+        <div class="row align-items-end justify-content-around">
+            @foreach ($ads as $ad)
+                <div class="card mb-3">
+                    @if ($ad->AdPhoto)
+                        <div class="img">
+                            <img src="{{ url($ad->AdPhoto) }}" class="card-img-top" alt="...">
+                        </div>
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $ad->Title }}</h5>
+                        <p class="card-text">{{ $ad->Description }}</p>
+                        <hr>
+                        <div class="d-flex flex-row justify-content-between">
+                            <p>Автор: {{ $ad->user->Username }}</p>
+                            <img src="{{ url($ad->user->UserPhoto) }}" alt="">
+                        </div>
+                        <p class="text-muted mb-2">Категория: {{ $ad->category->CategoryName }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
 @endsection
 
 

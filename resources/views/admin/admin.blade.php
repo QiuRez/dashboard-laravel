@@ -7,23 +7,26 @@
 @section('content')
     <div class="row align-items-start justify-content-between">
         <div class="col-md-7">
-            <div class="d-flex flex-row justify-content-between align-items-start flex-wrap">
+            <div class="d-flex flex-row justify-content-around align-items-start flex-wrap">
                 @if ($ads)
                     @foreach ($ads as $ad)
-                        <div class="card">
+                        <div class="card mb-3">
                             <div class="img">
                                 <img src="{{ url($ad->AdPhoto) }}" class="card-img-top" alt="...">
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{{$ad->Title}}</h5>
-                                <p class="card-text">{{$ad->Description}}</p>
+                                <h5 class="card-title">{{ $ad->Title }}</h5>
+                                <p class="card-text">{{ $ad->Description }}</p>
                                 <hr>
                                 <div class="d-flex flex-row justify-content-between">
-                                    <p>Автор: {{$ad->user->Username}}</p>
-                                    <img src="{{url($ad->user->UserPhoto)}}" alt="">
+                                    <p>Автор: {{ $ad->user->Username }}</p>
+                                    <img src="{{ url($ad->user->UserPhoto) }}" alt="">
                                 </div>
-                                <a href="{{route("admin.approved", ['adId' => "{$ad->AdID}"])}}" class="btn btn-primary">Одобрить</a>
-                                <a href="{{route("admin.rejection", ['adId' => "{$ad->AdID}"])}}" class="btn btn-danger">Отказать</a>
+                                <p class="text-muted mb-2">Категория: {{ $ad->category->CategoryName }}</p>
+                                <a href="{{ route('admin.approved', ['adId' => "{$ad->AdID}"]) }}"
+                                    class="btn btn-primary">Одобрить</a>
+                                <a href="{{ route('admin.rejection', ['adId' => "{$ad->AdID}"]) }}"
+                                    class="btn btn-danger">Отказать</a>
                             </div>
                         </div>
                     @endforeach
@@ -31,6 +34,15 @@
             </div>
         </div>
         <div class="col-sm-5">
+            {{printAllErrors($errors)}}
+            <div class="mb-3">
+                <form action="{{ route('admin') }}" method="post">
+                @csrf
+                    <label for="newCategory" class="form-label">Новая категория</label>
+                    <input class="form-control mb-2" name="newCategory" type="text" id="newCategory">
+                    <button type="submit" class="btn btn-success">Создать</button>
+                </form>
+            </div>
             <table class="table">
                 <thead>
                     <tr class="">
@@ -42,7 +54,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $users = App\Models\User::all() @endphp
                     @foreach ($users as $user)
                         <tr class='@if ($user->Banned) table-danger @endif'>
                             <td class="has-image"><img src="{{ $user->UserPhoto }}" alt=""></td>
@@ -54,11 +65,11 @@
                                     @switch($user->Banned)
                                         @case(false)
                                             <a href="">Edit</a>
-                                            <a href="{{route('user.ban', ['userId' => $user->UserID])}}">Ban</a>
+                                            <a href="{{ route('user.ban', ['userId' => $user->UserID]) }}">Ban</a>
                                         @break
 
                                         @case(true)
-                                            <a href="{{route('user.unban', ['userId' => $user->UserID])}}">Unban</a>
+                                            <a href="{{ route('user.unban', ['userId' => $user->UserID]) }}">Unban</a>
                                         @break
 
                                         @default

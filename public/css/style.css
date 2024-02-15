@@ -47,6 +47,9 @@ a:hover {
 p {
 	line-height: normal;
 }
+.row>* {
+	padding: 0;
+}
 
 img {
 	border: none;
@@ -410,7 +413,7 @@ footer p {
     object-fit: cover;
 }
 .card {
-	max-width: 280px;
+	width: 250px;
 }
 .card .img {
 	display: flex;
@@ -424,12 +427,18 @@ footer p {
 	height: auto;
 	border-radius: 20%;
 }
+.card .card-body {
+	min-height: 180px;
+}
 .card .card-body > div {
 	gap: 10px;
 	margin: 10px 0;
 }
 .card .card-body > div > p{
 	max-width: 120px;
+}
+.card .card-body .text-muted {
+	font-size: 13px;
 }
 
 
