@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 14 2024 г., 11:15
+-- Время создания: Фев 16 2024 г., 01:04
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.0.22
 
@@ -61,7 +61,17 @@ CREATE TABLE `Adverisements` (
 --
 
 INSERT INTO `Adverisements` (`AdID`, `UserID`, `CategoryID`, `Title`, `Description`, `AdPhoto`, `Status`, `Created_at`, `Updated_at`) VALUES
-(1, 42, 1, 'Заголовок', 'Комментарий', 'путь до фото', 'Одобрено', '2024-02-13 17:11:52', NULL);
+(1, 42, 1, 'Заголовок', 'Комментарий', 'путь до фото', 'Одобрено', '2024-02-13 17:11:52', NULL),
+(3, 45, 1, 'Заголовок', 'Текст', 'images/ad/123.jpg', 'Одобрено', '2024-02-14 22:20:22', NULL),
+(4, 45, 1, 'Заголовок', 'Комментарий', '', 'Одобрено', '2024-02-13 17:11:52', NULL),
+(6, 45, 1, 'Заголовок', 'Текст', 'images/ad/123.jpg', 'Отклонено', '2024-02-14 22:20:22', NULL),
+(7, 45, 1, 'Заголовок', 'Текст', 'images/ad/123.jpg', 'Одобрено', '2024-02-14 22:20:22', NULL),
+(9, 45, 1, 'Заголовок', 'Текст', 'images/ad/123.jpg', 'На рассмотрении', '2024-02-14 22:20:22', NULL),
+(11, 45, 1, 'asd', 'asasdasd', 'images/ad/170795401284.jpg', 'Одобрено', '2024-02-15 02:40:12', NULL),
+(12, 46, 1, 'asd', 'Banned', 'images/ad/170795401284.jpg', 'Одобрено', '2024-02-15 02:40:12', NULL),
+(13, 46, 1, 'asdasd', 'asdasd', 'images/ad/1707998956146.jpg', 'На рассмотрении', '2024-02-15 15:09:16', NULL),
+(14, 45, 2, 'asdasd', 'asdasd', 'images/ad/1708000308250.jpg', 'На рассмотрении', '2024-02-15 15:31:48', NULL),
+(15, 45, 2, '123', 'asdasd', 'images/ad/1708000829249.jpg', 'Одобрено', '2024-02-15 15:40:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -79,7 +89,8 @@ CREATE TABLE `Categories` (
 --
 
 INSERT INTO `Categories` (`CategoryID`, `CategoryName`) VALUES
-(1, 'Мужская одежда');
+(1, 'Мужская одежда'),
+(2, 'Компьютерные комплектующие');
 
 -- --------------------------------------------------------
 
@@ -106,6 +117,7 @@ CREATE TABLE `Users` (
   `Email` varchar(255) NOT NULL,
   `UserPhoto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `Role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'Пользователь',
+  `Banned` int NOT NULL DEFAULT '0',
   `remember_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -113,8 +125,10 @@ CREATE TABLE `Users` (
 -- Дамп данных таблицы `Users`
 --
 
-INSERT INTO `Users` (`UserID`, `Username`, `Password`, `Email`, `UserPhoto`, `Role`, `remember_token`) VALUES
-(42, 'qwe', '$2y$10$c7eLVQDiNuhkiantQs3Z8.Cr/ZOHGrClXaxmoKUlVPCczke7QDBfC', 'qwe@mail.ru', NULL, 'Пользователь', NULL);
+INSERT INTO `Users` (`UserID`, `Username`, `Password`, `Email`, `UserPhoto`, `Role`, `Banned`, `remember_token`) VALUES
+(45, 'qwe', '$2y$10$wWrsXNKdZTqBPRM8Yr/RAOigCHNUyB19qJVbAo7ILI4WnT2SmtA/y', 'qwe@mail.ru', 'images/users/170792676359.jpg', 'Администратор', 0, NULL),
+(46, 'qwee12', '$2y$10$xewMhhpIJVChgEmROPJBLeuvFodgDp1UisLcBIxf3oSVxhaARI35e', 'qwee@mail.ru', 'images/users/1707931363247.gif', 'Пользователь', 0, NULL),
+(47, 'qweeee', '$2y$10$QqUh8RAE84pOrCg1VpB7gedL6/3argnVUgJPRQlqQ5kJ1QlDBQ/Je', 'qweeee@mail.ru', 'images/users/default.png', 'Пользователь', 0, NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -169,13 +183,13 @@ ALTER TABLE `AdminLog`
 -- AUTO_INCREMENT для таблицы `Adverisements`
 --
 ALTER TABLE `Adverisements`
-  MODIFY `AdID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `AdID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `Categories`
 --
 ALTER TABLE `Categories`
-  MODIFY `CategoryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `CategoryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `migrations`
@@ -187,7 +201,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT для таблицы `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
