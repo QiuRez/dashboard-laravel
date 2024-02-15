@@ -126,7 +126,7 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`UserID`, `Username`, `Password`, `Email`, `UserPhoto`, `Role`, `Banned`, `remember_token`) VALUES
-(45, 'qwe', '$2y$10$wWrsXNKdZTqBPRM8Yr/RAOigCHNUyB19qJVbAo7ILI4WnT2SmtA/y', 'qwe@mail.ru', 'images/users/170792676359.jpg', 'Администратор', 0, NULL),
+(45, 'qwe', '$2y$10$wWrsXNKdZTqBPRM8Yr/RAOigCHNUyB19qJVbAo7ILI4WnT2SmtA/y', 'qwe@mail.ru', 'images/users/default.png', 'Администратор', 0, NULL),
 (46, 'qwee12', '$2y$10$xewMhhpIJVChgEmROPJBLeuvFodgDp1UisLcBIxf3oSVxhaARI35e', 'qwee@mail.ru', 'images/users/1707931363247.gif', 'Пользователь', 0, NULL),
 (47, 'qweeee', '$2y$10$QqUh8RAE84pOrCg1VpB7gedL6/3argnVUgJPRQlqQ5kJ1QlDBQ/Je', 'qweeee@mail.ru', 'images/users/default.png', 'Пользователь', 0, NULL);
 
