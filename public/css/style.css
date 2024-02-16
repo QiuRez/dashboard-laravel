@@ -28,6 +28,8 @@
 	font-style: normal;
 }
 
+@import "bootstrap/scss/utilities";
+
 * {
 	margin: 0;
 	padding: 0;
@@ -458,8 +460,8 @@ footer p {
 	min-height: 180px;
 }
 .card .card-body > div {
-	gap: 10px;
-	margin: 10px 0;
+	/* gap: 10px; */
+	margin: 10px 0 0 0;
 }
 .card .card-body > div > p{
 	max-width: 120px;

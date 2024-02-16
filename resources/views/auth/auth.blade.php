@@ -6,16 +6,7 @@
 
 @section('content')
     <div class="auth">
-        @if ($errors->any() || Session::get('error'))
-        <ul>
-            @foreach($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-            @if ($message = Session::get('error'))
-            <li>{{$message}}</li>
-            @endif
-        </ul>
-        @endif
+        {{printAll($errors)}}
         <h2 class='reg_and_auth-title'>Авторизация</h2>
         <form action="auth" class="auth reg_auth" method="post">
             @csrf

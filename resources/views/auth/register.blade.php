@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="auth">
-        {{printAllErrors($errors)}}
+        {{printAll($errors)}}
         <h2 class="reg_and_auth-title">Регистрация</h2>
         <form action="register" class="register reg_auth" enctype="multipart/form-data" method="post">
             @csrf

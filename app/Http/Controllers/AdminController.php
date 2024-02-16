@@ -14,9 +14,9 @@ class AdminController extends Controller
     public function admin() {
         $ads = Adverisements::Wherehas('user', function(Builder $query) {
                 $query->where('Banned', '!=', '1');
-        })->with('category')->where('Status', 'На рассмотрении')->get();
+        })->with('category')->where('Status', 'На рассмотрении')->orderBy('Created_at')->get();
 
-        $users = User::all();
+        $users = User::orderBy('Role')->orderBy('Username')->get();
 
         $title = 'Админ - BOX PRESS';
         return view('admin.admin', compact('title', 'ads', 'users'));
@@ -65,30 +65,34 @@ class AdminController extends Controller
 
         $validate = $request->validate([
             'username' => 'min:2|string',
-            'email' => 'email',
+            'email' => 'email|string',
             'userId'=> 'required'
         ]);
 
         $user = User::find($request->input('userId'));
         $errors = [];
+        $success = [];
 
         if ($user->Username != $request->input('username')) {
             if (!User::firstWhere('Username', $request->input('username'))) {
                 $user->Username = $request->input('username');
+                array_push($success, ['user' => 'Имя пользователя обновлено']);
             } else {
-                array_push($errors, ['user' => 'Такое имя пользователя уже есть']);
+                array_push($errors, ['user' => 'Имя пользователя уже используется']);
             }
         }
         if ($user->Email != $request->input('email')) {
-            if (!User::firstWhere('Email', '!=', $request->input('email'))) {
+            if (!User::firstWhere('Email', $request->input('email'))) {
                 $user->Email = $request->input('email');
+                array_push($success, ['email' => 'Почта пользователя обновлена']);
             } else {
-                array_push($errors, ['email' => 'Такая почта уже есть']);
+                array_push($errors, ['email' => 'Почта уже используется']);
             }
         }
         $user->save();
 
 
-        return redirect()->route('admin')->withErrors($errors);
+        return redirect()->back()->withErrors($errors)->with('success', $success);
     }
+
 }

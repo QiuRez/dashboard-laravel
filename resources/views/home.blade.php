@@ -11,6 +11,7 @@
 
 @section('content')
     @if ($ads)
+        {{printAll($errors)}}
         <div class="row align-items-end justify-content-around">
             @foreach ($ads as $ad)
                 <div class="card mb-3">
@@ -28,11 +29,19 @@
                             <img src="{{ url($ad->user->UserPhoto) }}" alt="">
                         </div>
                         <p class="text-muted mb-2">Категория: {{ $ad->category->CategoryName }}</p>
+                    @auth
+                        @if (Auth::user()->Role == 'Администратор')
+                            <a href="{{ route('ad.removeAd', ['adId' => $ad->AdID]) }}"
+                                class="btn btn-outline-danger btn-sm">Delete</a>
+                        @endif
+                    @endauth
                     </div>
                 </div>
             @endforeach
         </div>
-    @endif
+    @else
+        <h2>Объявлений нет :(</h2>
+    @endif 
 @endsection
 
 

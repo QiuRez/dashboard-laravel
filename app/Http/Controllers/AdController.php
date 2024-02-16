@@ -22,17 +22,28 @@ class AdController extends Controller
     public function createAdvertPost(Request $request)
     {
 
-        $credential = $request->validate([
+        $messages = [
+            'title.required' => "Поле заголовка пустое",
+            'title.min' => "Для заголовка требуется минимум 2 символа",
+            'title.max' => "Для заголовка требуется максимум 40 символов",
+            'description.required' => 'Поле текста пустое',
+            'description.min' => "Для текста требуется минимум 5 символа",
+            'description.max' => "Для текста требуется максимум 255 символов",
+            'category.required' => 'Выберите категорию'
+        ];
+
+        $request->validate([
             'title' => 'required|min:2|max:40',
             'description' => 'required|min:5|max:255',
             'image' => 'mimes:jpg,png,jpeg|max:2048|dimensions:min_width=40,min_height=40,max_width=2000,max_height=2000',
             'category' => 'required'
-        ]);
+        ], $messages);
 
         if ($file = $request->file('image')) {
             $fileName = time() . random_int(0, 255) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images/ad'), $fileName);
-        } 
+
+        } else $fileName = false;
 
         $path = $fileName ? 'images/ad/' . $fileName : '';
 
@@ -46,5 +57,11 @@ class AdController extends Controller
         ]);
 
         return redirect()->route('home');
+    }
+
+    public function removeAd($adId) {
+        $ad = Adverisements::find($adId);
+        $ad->delete();
+        return redirect()->back()->with('success', 'Объявление удалено');
     }
 }

@@ -9,6 +9,8 @@
         <h2>Категория не найдена</h2>
     @else
         @if ($ads)
+            {{printAll($errors)}}
+            <h2 class="text-center">{{ $category->CategoryName }}</h2>
             <div class="row align-items-end justify-content-around">
                 @foreach ($ads as $ad)
                     <div class="card mb-3">
@@ -25,6 +27,11 @@
                                 <p>Автор: {{ $ad->user->Username }}</p>
                                 <img src="{{ url($ad->user->UserPhoto) }}" alt="">
                             </div>
+                            @auth
+                                @if (Auth::user()->Role == 'Администратор')
+                                    <a href="{{route('ad.removeAd', ['adId' => $ad->AdID])}}" class="btn btn-outline-danger btn-sm">Delete</a>
+                                @endif
+                            @endauth
                         </div>
                     </div>
                 @endforeach

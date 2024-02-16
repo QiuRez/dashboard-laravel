@@ -7,13 +7,15 @@
 @section('content')
     <div class="row align-items-start justify-content-between">
         <div class="col-sm-7">
-            <div class="d-flex flex-row justify-content-around align-items-start flex-wrap">
+            <div class="d-flex flex-row justify-content-around align-items-end flex-wrap">
                 @if ($ads)
                     @foreach ($ads as $ad)
                         <div class="card mb-3">
+                            @if ($ad->AdPhoto)
                             <div class="img">
                                 <img src="{{ url($ad->AdPhoto) }}" class="card-img-top" alt="...">
                             </div>
+                            @endif
                             <div class="card-body">
                                 <h5 class="card-title">{{ $ad->Title }}</h5>
                                 <p class="card-text">{{ $ad->Description }}</p>
@@ -23,10 +25,12 @@
                                     <img src="{{ url($ad->user->UserPhoto) }}" alt="">
                                 </div>
                                 <p class="text-muted mb-2">Категория: {{ $ad->category->CategoryName }}</p>
-                                <a href="{{ route('admin.approved', ['adId' => "{$ad->AdID}"]) }}"
-                                    class="btn btn-primary">Одобрить</a>
-                                <a href="{{ route('admin.rejection', ['adId' => "{$ad->AdID}"]) }}"
-                                    class="btn btn-danger">Отказать</a>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ route('admin.approved', ['adId' => "{$ad->AdID}"]) }}"
+                                        class="btn btn-primary">Одобрить</a>
+                                    <a href="{{ route('admin.rejection', ['adId' => "{$ad->AdID}"]) }}"
+                                        class="btn btn-danger">Отказать</a>
+                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -34,7 +38,7 @@
             </div>
         </div>
         <div class="col-sm-5">
-            {{ printAllErrors($errors) }}
+            {{ printAll($errors) }}
             <div class="mb-3">
                 <form action="{{ route('admin') }}" method="post">
                     @csrf

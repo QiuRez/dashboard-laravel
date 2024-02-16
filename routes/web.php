@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Models\Adverisements;
 use Illuminate\Support\Facades\Route;
 
 
@@ -49,6 +50,7 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('/admin/user/unban/{userId}', [AdminController::class, 'unban'])->name('user.unban');
     Route::post('/admin', [AdminController::class, 'newCategory'])->name('admin.newCategory');
     Route::post('/admin', [AdminController::class, 'userEdit'])->name('admin.userEdit');
+    Route::get('/admin/ad/remove/{adId}', [AdController::class, 'removeAd'])->name('ad.removeAd');
 });
 
 // ВЫХОД

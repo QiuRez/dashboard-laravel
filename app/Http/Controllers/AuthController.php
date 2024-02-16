@@ -77,7 +77,7 @@ class AuthController extends Controller
             } 
         } 
 
-        return redirect()->route('auth')->with('error', 'Почта или пароль не верны');
+        return redirect()->route('auth')->withErrors('Почта или пароль не верны');
 
 
     }

@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
-function printAllErrors($errors)
+function printAll($errors)
 {
     if ($errors->any() || Session::get('error')) {
-        echo "<ul class='alert alert-danger'>";
+        echo "<ul class='list-group col-4 mx-auto mb-2''>";
 
         foreach ($errors->all() as $error) {
             if (is_string($error)) {
-                echo "<li>$error</li>";
+                echo "<li class='list-group-item list-group-item-danger text-center'>$error</li>";
             } else {
                 foreach ($error as $err) {
                     if (is_string($err)) {
@@ -27,9 +27,31 @@ function printAllErrors($errors)
         }
         echo "</ul>";
     }
+    if ($message = Session::get('success')) {
+        echo "<ul class='list-group col-4 mx-auto mb-2'>";
+
+        if (is_string($message)) {
+            echo "<li class='list-group-item list-group-item-success text-center'>$message</li>";
+        } else {
+            foreach ($message as $value) {
+                if (is_string($value)) {
+                    echo "<li class='list-group-item list-group-item-success text-center'>$value</li>";
+                } else {
+                    foreach ($value as $valu) {
+                        if (is_string($valu)) {
+                            echo "<li class='list-group-item list-group-item-success text-center'>$valu</li>";
+                        }
+                    }
+                }
+            }
+        }
+
+        echo "</ul>";
+    }
 }
 
-function checkBannedAndAuth() {
+function checkBannedAndAuth()
+{
     if (!Auth::check()) {
         return false;
     } else {
