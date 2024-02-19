@@ -25,6 +25,10 @@
                 <input type="password" name="password" class="@if ($errors->has('password')) has-error @endif"
                     id="password">
             </div>
+            <div class="register__remember input-div">
+                <label for="remember">Запомнить меня</label>
+                <input type="checkbox" name="remember" id="remember" value="1">
+            </div>
             <div class="image-input">
                 <p>Фото профиля</p>
                 <input type="file" id="image" name="image" class="image">

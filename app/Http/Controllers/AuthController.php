@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\MessageBag;
 
 class AuthController extends Controller
 {
@@ -25,9 +23,7 @@ class AuthController extends Controller
             'password' => ['required' => 'Заполните поле пароля'],
         ];
 
-            // 'dimensions' => 'Изображение имеет недопустимые размеры.',
-            // 'mimes' => 'Изображение имеет недопустимое расширение. Допустимые: jpg,png,jpeg,gif',
-        $credential = $request->validate([
+        $request->validate([
             'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
@@ -72,7 +68,7 @@ class AuthController extends Controller
 
         if ($user = User::firstWhere('email', $request['email'])) {
             if (password_verify($request->input('password'), $user->Password)) {
-                Auth::login($user);
+                Auth::login($user, $request->boolean('remember'));
                 return redirect()->route('home')->with('success', 'Вы успешно авторизовались');
             } 
         } 

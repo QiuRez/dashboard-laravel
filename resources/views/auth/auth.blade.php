@@ -20,7 +20,7 @@
             </div>
             <div class="auth__remember input-div">
                 <label for="remember">Запомнить меня</label>
-                <input type="checkbox" name="remember" id="remember" value="remember">
+                <input type="checkbox" name="remember" id="remember" value="1">
             </div>
             <button type="submit">Войти</button>
         </form>
