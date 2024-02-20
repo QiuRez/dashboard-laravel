@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminLog;
 use Illuminate\Http\Request;
 use App\Models\Adverisements;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -23,16 +25,19 @@ class AdminController extends Controller
     }
 
     public function rejection($adId) {
-        $ad = Adverisements::find($adId);
+        $ad = Adverisements::with('user')->find($adId);
         $ad->Status = 'Отклонено';
         $ad->save();
+
+        adminLog('Отклонил объявление', $ad->user->UserID, $adId);
         return redirect()->route('admin');
     }
 
     public function approved($adId) {
-        $ad = Adverisements::find($adId);
+        $ad = Adverisements::with('user')->find($adId);
         $ad->Status = 'Одобрено';
         $ad->save();
+        adminLog('Одобрил объявление', $ad->user->UserID, $adId);
         return redirect()->route('admin');
     }
 
@@ -40,12 +45,16 @@ class AdminController extends Controller
         $user = User::find($userId);
         $user->Banned = 1;
         $user->save();
+
+        adminLog('Забанил пользователя', $userId);
         return redirect()->route('admin');
     }
     public function unban($userId) {
         $user = User::find($userId);
         $user->Banned = 0;
         $user->save();
+
+        adminLog('Разбанил пользователя', $userId);
         return redirect()->route('admin');
     }
     
@@ -58,12 +67,14 @@ class AdminController extends Controller
             'CategoryName' => $request->input('newCategory'),
         ]);
 
-        return redirect()->route('admin');
+        adminLog('Добавил категорию "' . $request->input('newCategory') . '"');
+
+        return redirect()->back()->with('success', 'Категория создана');
     }
 
     public function userEdit(Request $request) {
 
-        $validate = $request->validate([
+        $request->validate([
             'username' => 'min:2|string',
             'email' => 'email|string',
             'userId'=> 'required'
@@ -75,22 +86,25 @@ class AdminController extends Controller
 
         if ($user->Username != $request->input('username')) {
             if (!User::firstWhere('Username', $request->input('username'))) {
+                $success['user'] = "Имя пользователя '{$user->Username}' изменено на '{$request->input('username')}'";
                 $user->Username = $request->input('username');
-                array_push($success, ['user' => 'Имя пользователя обновлено']);
             } else {
                 array_push($errors, ['user' => 'Имя пользователя уже используется']);
             }
         }
         if ($user->Email != $request->input('email')) {
             if (!User::firstWhere('Email', $request->input('email'))) {
+                $success['email'] = "Почта пользователя '{$user->Email}' обновлена на '{$request->input('email')}'";
                 $user->Email = $request->input('email');
-                array_push($success, ['email' => 'Почта пользователя обновлена']);
             } else {
                 array_push($errors, ['email' => 'Почта уже используется']);
             }
         }
         $user->save();
 
+        $result = implode('. ', $success);
+
+        adminLog($result, $user->UserID);
 
         return redirect()->back()->withErrors($errors)->with('success', $success);
     }

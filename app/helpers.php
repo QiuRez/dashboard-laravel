@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AdminLog;
 
 function printAll($errors)
 {
     if ($errors->any() || Session::get('error')) {
-        echo "<ul class='list-group col-4 mx-auto mb-2''>";
+        echo "<ul class='list-group col-5 mx-auto mb-2''>";
 
         foreach ($errors->all() as $error) {
             if (is_string($error)) {
@@ -28,7 +29,7 @@ function printAll($errors)
         echo "</ul>";
     }
     if ($message = Session::get('success')) {
-        echo "<ul class='list-group col-4 mx-auto mb-2'>";
+        echo "<ul class='list-group col-5 mx-auto mb-2'>";
 
         if (is_string($message)) {
             echo "<li class='list-group-item list-group-item-success text-center'>$message</li>";
@@ -60,4 +61,14 @@ function checkBannedAndAuth()
         }
         return true;
     }
+}
+
+function adminLog(string $action, Int $TargetUserID = null, Int $TargetAdID = null) {
+    
+    AdminLog::create([
+            'AdminID' => Auth::id(),
+            'Action' => $action,
+            'TargetUserID' => $TargetUserID,
+            'TargetAdID' => $TargetAdID,
+        ]);
 }
