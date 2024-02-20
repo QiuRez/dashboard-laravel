@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 // ВСЕ
 Route::get('/', [HomeController::class, 'main'])->name('home');
-Route::get('/category/{categoryID}', [CategoryController::class, 'category']);
+Route::get('/category/{categoryID}', [CategoryController::class, 'category'])->name('category');
 
 // ГОСТИ (НЕ АВТОРИЗОВАННЫЕ)
 Route::group(['middleware' => ['guest']], function() {
@@ -48,9 +48,10 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('/admin/ad/approved/{adId}', [AdminController::class, 'approved'])->name('admin.approved');
     Route::get('/admin/user/ban/{userId}', [AdminController::class, 'ban'])->name('user.ban');
     Route::get('/admin/user/unban/{userId}', [AdminController::class, 'unban'])->name('user.unban');
-    Route::post('/admin', [AdminController::class, 'newCategory'])->name('admin.newCategory');
+    Route::post('/admin/category/new', [AdminController::class, 'newCategory'])->name('admin.newCategory');
     Route::post('/admin', [AdminController::class, 'userEdit'])->name('admin.userEdit');
     Route::get('/admin/ad/remove/{adId}', [AdController::class, 'removeAd'])->name('ad.removeAd');
+    Route::post('/admin/ad/edit', [AdController::class, 'editAd'])->name('ad.editAd');
 });
 
 // ВЫХОД

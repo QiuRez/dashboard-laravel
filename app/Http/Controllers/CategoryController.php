@@ -12,9 +12,11 @@ class CategoryController extends Controller
     public function category($categoryID) {
         if ($category = Category::firstWhere('CategoryID', $categoryID)) {
             
-            $ads = Adverisements::with('user')->Wherehas('user', function(Builder $query) {
+            $ads = Adverisements::Wherehas('user', function(Builder $query) {
                 $query->where('Banned', '!=', '1');
             })->where([['CategoryID', $categoryID], ['Status', 'Одобрено']])->get();
+            
+            $categories = Category::all();
 
             $notFound = false;
             $title = $category->CategoryName;
@@ -24,6 +26,6 @@ class CategoryController extends Controller
             $title = 'BOX PRESS';
         }
 
-        return view('ad.category', compact('title', 'notFound', 'category', 'categoryID', 'ads'));
+        return view('ad.category', compact('title', 'notFound', 'category', 'categoryID', 'ads', 'categories'));
     }
 }

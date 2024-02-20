@@ -40,7 +40,7 @@
         <div class="col-sm-5">
             {{ printAll($errors) }}
             <div class="mb-3">
-                <form action="{{ route('admin') }}" method="post">
+                <form action="{{ route('admin.newCategory') }}" method="post">
                     @csrf
                     <label for="newCategory" class="form-label">Новая категория</label>
                     <input class="form-control mb-2" name="newCategory" type="text" id="newCategory">

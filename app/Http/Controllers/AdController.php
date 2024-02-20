@@ -64,4 +64,42 @@ class AdController extends Controller
         $ad->delete();
         return redirect()->back()->with('success', 'Объявление удалено');
     }
+
+    public function editAd(Request $request) {
+
+        $messages = [
+            'title.required' => "Поле заголовка пустое",
+            'title.min' => "Для заголовка требуется минимум 2 символа",
+            'title.max' => "Для заголовка требуется максимум 40 символов",
+            'description.required' => 'Поле текста пустое',
+            'description.min' => "Для текста требуется минимум 5 символа",
+            'description.max' => "Для текста требуется максимум 255 символов",
+            'category.required' => 'Выберите категорию'
+        ];
+
+        $request->validate([
+            'title' => 'required|min:2|max:40',
+            'description' => 'required|min:5|max:255',
+            'adId'=> 'required'
+        ], $messages);
+
+        $ad = Adverisements::find($request->input('adId'));
+        $success = [];
+
+        if ($ad->Title != $request->input('title')) {
+            $ad->Title = $request->input('title');
+            array_push($success, ['user' => 'Заголовок объявления изменён']);
+        }
+        if ($ad->Description != $request->input('description')) {
+            $ad->Description = $request->input('description');
+            array_push($success, ['description' => 'Текст объявления изменён']);
+        }
+        if ($ad->CategoryID != $request->input('category')) {
+            $ad->CategoryID = $request->input('category');
+            array_push($success, ['category' => 'Категория объявления изменена']);
+        }
+        $ad->save();
+
+        return redirect()->back()->with('success', $success);
+    }
 }

@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{url('css/style.css')}}" />
         <title>@section('title') @show</title>
     </head>
@@ -17,14 +17,16 @@
 			<nav>
 				<ul class="menu">
 					<li><a href="{{route('home')}}">Home</a></li>
-					<li class="dropdown-toggle" >Categories</li>
-                    <ul class="dropdown-menu">
+                    <div class="dropdown">
+					<a class="dropdown-toggle" id="dropdownMenu1" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end p-2" aria-labelledby="dropdownMenu1">
                         @if($categories = App\Models\Category::all())
                         @foreach($categories as $category)
-                        <li><a href="/category/{{$category->CategoryID}}">{{$category->CategoryName}}</a></li>
+                        <li><a class="dropdown-item" href="/category/{{$category->CategoryID}}">{{$category->CategoryName}}</a></li>
                         @endforeach
                         @endif
                     </ul>
+                    </div>
                     
                     @if (checkBannedAndAuth())
                         <li><a href="{{route('ad.create')}}">Добавить объявление</a></li>
@@ -59,8 +61,8 @@
 			<p>Copyright &copy 2024 BoxPress by Vasiluk Egor. All Rights Reserved.</p>
             @show
 		</footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{url('js/jquery-3.7.1.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{url('js/app.js')}}"></script>
 	</body>
 </html>

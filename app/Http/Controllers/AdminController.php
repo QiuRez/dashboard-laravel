@@ -50,7 +50,7 @@ class AdminController extends Controller
     }
     
     public function newCategory(Request $request) {
-        $validate = $request->validate([
+        $request->validate([
             'newCategory' => 'required|min:2|max:40|string|unique:categories,CategoryName',
         ]);
 

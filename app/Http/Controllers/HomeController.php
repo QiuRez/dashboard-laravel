@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Adverisements;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -15,8 +16,10 @@ class HomeController extends Controller
             $query->where('Banned', '!=', '1');
         })->with('category')->where('Status', 'Одобрено')->orderBy('Created_at', 'desc')->get();
 
+        $categories = Category::all();
+
         $title = 'BOX NEWS';
 
-        return view('home', compact('title', 'ads'));
+        return view('home', compact('title', 'ads', 'categories'));
     }
 }

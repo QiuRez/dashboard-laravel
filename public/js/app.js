@@ -1,4 +1,4 @@
-$(document).click(function(e) {
+$(document).click(function (e) {
 
     var dropdown = document.querySelector('.dropdown-menu');
     if ($(e.target).closest('.dropdown-toggle').length) {
@@ -21,7 +21,7 @@ function userEdit(event) {
 
         tds.children('p').fadeOut(0);
         tds.children('input').fadeIn(0);
-    } 
+    }
 
 
     if ($(event).hasClass('btn-cancel')) {
