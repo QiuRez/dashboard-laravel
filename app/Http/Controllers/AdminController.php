@@ -37,7 +37,7 @@ class AdminController extends Controller
         $ad = Adverisements::with('user')->find($adId);
         $ad->Status = 'Одобрено';
         $ad->save();
-        adminLog('Одобрил объявление', $ad->user->UserID, $adId);
+        adminLog('Принял объявление', $ad->user->UserID, $adId);
         return redirect()->route('admin');
     }
 

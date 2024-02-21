@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('Description');
             $table->string('AdPhoto')->nullable();
             $table->string('Status');
-            $table->dateTime('Created_at')->default(date("Y-m-d H:i:s"));
-            $table->dateTime('Updated_at')->nullable();
+            $table->timestamp('Created_at')->default(date("Y-m-d H:i:s"));
+            $table->timestamp('Updated_at')->nullable();
         });
     }
 

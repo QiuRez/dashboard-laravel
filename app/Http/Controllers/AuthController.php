@@ -61,7 +61,7 @@ class AuthController extends Controller
 
     public function PostAuth(Request $request) {
 
-        $credential = $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);

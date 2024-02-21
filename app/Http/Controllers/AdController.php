@@ -61,8 +61,9 @@ class AdController extends Controller
 
     public function removeAd($adId) {
         $ad = Adverisements::with('user')->find($adId);
-        adminLog('Удаление объявления "' . $ad->Title . '"', $ad->user->UserID);
-        $ad->delete();
+        $ad->Status = 'Удалён';
+        $ad->save();
+        adminLog('Удаление объявления "' . $ad->Title . '"', $ad->user->UserID, $adId);
 
 
         return redirect()->back()->with('success', 'Объявление удалено');
@@ -88,20 +89,25 @@ class AdController extends Controller
 
         $ad = Adverisements::with('user')->with('category')->find($request->input('adId'));
         $success = [];
+        $edit = False;
 
         if ($ad->Title != $request->input('title')) {
             $success['user'] = "Заголовок объявления изменён с '{$ad->Title}' на '{$request->input('title')}'";
             $ad->Title = $request->input('title');
+            $edit = True;
         }
         if ($ad->Description != $request->input('description')) {
             $success['description'] = "Текст объявления изменён c '{$ad->Description}' на '{$request->input('description')}'";
             $ad->Description = $request->input('description');
+            $edit = True;
         }
         if ($ad->CategoryID != $request->input('category')) {
             $category = Category::find($request->input('category'));
             $success['category'] = "Категория объявления изменена c <br>  '{$ad->category->CategoryName}' на '{$category->CategoryName}'";
             $ad->CategoryID = $request->input('category');
+            $edit = True;
         }
+        $edit ? $ad->Updated_at = date('Y-m-d H:i:s') : false;
         $ad->save();
 
         $result = implode('. ', array_values($success));

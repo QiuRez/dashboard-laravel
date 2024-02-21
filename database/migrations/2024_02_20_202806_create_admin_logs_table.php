@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('Action');
             $table->foreignId('TargetUserID')->nullable()->constrained('Users', 'UserID');
             $table->foreignId('TargetAdID')->nullable()->constrained('Adverisements', 'AdID')->onDelete('cascade');
-            $table->dateTime('Time')->default(date("Y-m-d H:i:s"));
+            $table->timestamp('Time')->default(date("Y-m-d H:i:s"));
         });
     }
 
