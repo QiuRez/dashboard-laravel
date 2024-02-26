@@ -59,11 +59,11 @@ class AdController extends Controller
         return redirect()->route('home');
     }
 
-    public function removeAd($adId) {
-        $ad = Adverisements::with('user')->find($adId);
+    public function removeAd(Adverisements $ad) {
+        $ad->with('user');
         $ad->Status = 'Удалён';
         $ad->save();
-        adminLog('Удаление объявления "' . $ad->Title . '"', $ad->user->UserID, $adId);
+        adminLog('Удаление объявления "' . $ad->Title . '"', $ad->user->UserID, $ad->AdID);
 
 
         return redirect()->back()->with('success', 'Объявление удалено');

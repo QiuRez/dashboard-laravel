@@ -26,9 +26,9 @@
                                 </div>
                                 <p class="text-muted mb-2">Категория: {{ $ad->category->CategoryName }}</p>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="{{ route('admin.approved', ['adId' => "{$ad->AdID}"]) }}"
+                                    <a href="{{ route('admin.approved', ['adverisements' => "{$ad->AdID}"]) }}"
                                         class="btn btn-primary">Одобрить</a>
-                                    <a href="{{ route('admin.rejection', ['adId' => "{$ad->AdID}"]) }}"
+                                    <a href="{{ route('admin.rejection', ['adverisements' => "{$ad->AdID}"]) }}"
                                         class="btn btn-danger">Отказать</a>
                                 </div>
                             </div>
@@ -82,11 +82,11 @@
                                                 <button type="button" class="btn-fake" onclick="userEdit(this)">Edit</button>
                                                 <button type="button" class="btn-cancel" onclick="userEdit(this)">Cancel</button>
 
-                                                <a class="ban-or-unban" href="{{ route('user.ban', ['userId' => $user->UserID]) }}">Ban</a>
+                                                <a class="ban-or-unban" href="{{ route('user.ban', ['user' => $user->UserID]) }}">Ban</a>
                                             @break
 
                                             @case(true)
-                                                <a class="ban-or-unban" href="{{ route('user.unban', ['userId' => $user->UserID]) }}">Unban</a>
+                                                <a class="ban-or-unban" href="{{ route('user.unban', ['user' => $user->UserID]) }}">Unban</a>
                                             @break
                                             @default
                                         @endswitch

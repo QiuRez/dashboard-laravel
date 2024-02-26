@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Models\Adverisements;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 // ВСЕ
 Route::get('/', [HomeController::class, 'main'])->name('home');
-Route::get('/category/{categoryID}', [CategoryController::class, 'category'])->name('category');
+Route::get('/category/{category}', [CategoryController::class, 'category'])->name('category');
 
 // ГОСТИ (НЕ АВТОРИЗОВАННЫЕ)
 Route::group(['middleware' => ['guest']], function() {
@@ -44,13 +45,13 @@ Route::group(['middleware' => ['auth', 'banned']], function() {
 // АДМИНИСТРАТОРЫ
 Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
-    Route::get('/admin/ad/rejection/{adId}', [AdminController::class, 'rejection'])->name('admin.rejection');
-    Route::get('/admin/ad/approved/{adId}', [AdminController::class, 'approved'])->name('admin.approved');
-    Route::get('/admin/user/ban/{userId}', [AdminController::class, 'ban'])->name('user.ban');
-    Route::get('/admin/user/unban/{userId}', [AdminController::class, 'unban'])->name('user.unban');
+    Route::get('/admin/user/ban/{user}', [AdminController::class, 'ban'])->name('user.ban');
+    Route::get('/admin/user/unban/{user}', [AdminController::class, 'unban'])->name('user.unban');
+    Route::get('/admin/ad/rejection/{adverisements}', [AdminController::class, 'rejection'])->name('admin.rejection');
+    Route::get('/admin/ad/approved/{adverisements}', [AdminController::class, 'approved'])->name('admin.approved');
     Route::post('/admin/category/new', [AdminController::class, 'newCategory'])->name('admin.newCategory');
     Route::post('/admin', [AdminController::class, 'userEdit'])->name('admin.userEdit');
-    Route::get('/admin/ad/remove/{adId}', [AdController::class, 'removeAd'])->name('ad.removeAd');
+    Route::get('/admin/ad/remove/{adverisements}', [AdController::class, 'removeAd'])->name('ad.removeAd');
     Route::post('/admin/ad/edit', [AdController::class, 'editAd'])->name('ad.editAd');
 });
 

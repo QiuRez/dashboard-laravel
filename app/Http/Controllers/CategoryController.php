@@ -9,14 +9,15 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function category($categoryID) {
-        if ($category = Category::firstWhere('CategoryID', $categoryID)) {
+    public function category(Category $category) {
+        if ($category) {
             
             $ads = Adverisements::Wherehas('user', function(Builder $query) {
                 $query->where('Banned', '!=', '1');
-            })->where([['CategoryID', $categoryID], ['Status', 'Одобрено']])->get();
+            })->where([['CategoryID', $category->CategoryID], ['Status', 'Одобрено']])->get();
             
             $categories = Category::all();
+            $categoryID = $category->CategoryID;
 
             $notFound = false;
             $title = $category->CategoryName;

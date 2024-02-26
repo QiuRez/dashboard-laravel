@@ -18,7 +18,7 @@
             @endif
             @auth
                 @if (Auth::user()->Role == 'Администратор')
-                    <a href="{{ route('ad.removeAd', ['adId' => $ad->AdID]) }}"
+                    <a href="{{ route('ad.removeAd', ['adverisements' => $ad->AdID]) }}"
                         class="btn btn-outline-danger btn-sm">Delete</a>
                     <button data-bs-toggle="modal" data-bs-target="#ModalEdit_{{ $ad->AdID }}"
                         class="btn btn-outline-info btn-sm">Edit</button>

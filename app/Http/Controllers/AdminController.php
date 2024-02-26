@@ -24,37 +24,35 @@ class AdminController extends Controller
         return view('admin.admin', compact('title', 'ads', 'users'));
     }
 
-    public function rejection($adId) {
-        $ad = Adverisements::with('user')->find($adId);
-        $ad->Status = 'Отклонено';
-        $ad->save();
+    public function rejection(Adverisements $adverisements) {
+        $adverisements->with('user');
+        $adverisements->Status = 'Отклонено';
+        $adverisements->save();
 
-        adminLog('Отклонил объявление', $ad->user->UserID, $adId);
+        adminLog('Отклонил объявление', $adverisements->user->UserID, $adverisements->AdID);
         return redirect()->route('admin');
     }
 
-    public function approved($adId) {
-        $ad = Adverisements::with('user')->find($adId);
-        $ad->Status = 'Одобрено';
-        $ad->save();
-        adminLog('Принял объявление', $ad->user->UserID, $adId);
+    public function approved(Adverisements $adverisements) {
+        $adverisements->with('user');
+        $adverisements->Status = 'Одобрено';
+        $adverisements->save();
+        adminLog('Принял объявление', $adverisements->user->UserID, $adverisements->AdID);
         return redirect()->route('admin');
     }
 
-    public function ban($userId) {
-        $user = User::find($userId);
+    public function ban(User $user) {
         $user->Banned = 1;
         $user->save();
 
-        adminLog('Забанил пользователя', $userId);
+        adminLog('Забанил пользователя', $user->UserID);
         return redirect()->route('admin');
     }
-    public function unban($userId) {
-        $user = User::find($userId);
+    public function unban(User $user) {
         $user->Banned = 0;
         $user->save();
 
-        adminLog('Разбанил пользователя', $userId);
+        adminLog('Разбанил пользователя', $user->UserID);
         return redirect()->route('admin');
     }
     
