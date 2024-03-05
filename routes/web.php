@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Models\Adverisements;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 // ВСЕ
 Route::get('/', [HomeController::class, 'main'])->name('home');
 Route::get('/category/{category}', [CategoryController::class, 'category'])->name('category');
+Route::get('/users/{user}', [UserController::class, 'getUser'])->name('users.getUser');
 
 // ГОСТИ (НЕ АВТОРИЗОВАННЫЕ)
 Route::group(['middleware' => ['guest']], function() {

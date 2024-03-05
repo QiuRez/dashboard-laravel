@@ -11,7 +11,7 @@
             <hr>
             <div class="d-flex flex-row justify-content-between">
                 <p>Автор: {{ $ad->user->Username }}</p>
-                <img src="{{ url($ad->user->UserPhoto) }}" alt="">
+                <img onclick='window.location=`{{route("users.getUser", ["user" => $ad->user->UserID])}}`' src="{{ url($ad->user->UserPhoto) }}" alt="">
             </div>
             @if (Route::current()->getName() == 'home')
                 <p class="text-muted mb-2">Категория: {{ $ad->category->CategoryName }}</p>
