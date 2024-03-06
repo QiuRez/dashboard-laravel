@@ -10,6 +10,7 @@
 
 
 @section('content')
+    {{printAll($errors)}}
     <div class="row">
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-2 pb-4 cover">

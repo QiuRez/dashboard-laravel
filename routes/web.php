@@ -4,6 +4,7 @@ use App\Http\Controllers\AdController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Models\Adverisements;
@@ -37,11 +38,13 @@ Route::group(['middleware' => ['guest']], function() {
     Route::post('/auth', [AuthController::class, 'PostAuth']);
 });
 
-// ЗАБАНЕННЫЕ ПОЛЬЗОВАТЕЛИ
+// НЕ ЗАБАНЕННЫЕ И АВТОРИЗОРАННЫЕ ПОЛЬЗОВАТЕЛИ
 Route::group(['middleware' => ['auth', 'banned']], function() {
 
     Route::get('ad/create-ad', [AdController::class, 'createAdvert'])->name('ad.create');
     Route::post('ad/create-ad', [AdController::class, 'createAdvertPost']);
+    
+    Route::resource('comment/create', CommentController::class);
 });
 
 // АДМИНИСТРАТОРЫ

@@ -19,7 +19,6 @@ class UserController extends Controller
                 ['Status', 'Одобрено']
             ])->get();
 
-            
             $comments = Comments::with('author')
             ->where('TargetUserId', $user->getAttribute('UserID'))
             ->get();
