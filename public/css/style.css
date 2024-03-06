@@ -602,6 +602,18 @@ p {
 	cursor: pointer;
 }
 
+.btn-comment-delete {
+	width: 50px;
+	height: auto;
+	background-color: #dc3545;
+	color: white;
+	font-family: 500;
+	padding: 6px 5px;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
 
 
 

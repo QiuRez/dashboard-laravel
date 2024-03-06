@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(Request $request) {
+    public function create(Request $request) {
         $comment = Comments::create($request->except(
             '_token',
         ));
@@ -16,5 +16,14 @@ class CommentController extends Controller
             return redirect()->back()->with('success', 'Комментарий создан');
         } 
         return redirect()->back()->withErrors(['Failed' => "Не удалось создать комментарий"]);
+    }
+
+    public function delete(Comments $comments) {
+        if ($comments) {
+            if ($comments->delete()) {
+                return redirect()->back()->with('success', 'Комментарий удален');
+            }
+            return redirect()->back()->withErrors(['Failed' => "Не удалось удалить комментарий"]);
+        } 
     }
 }

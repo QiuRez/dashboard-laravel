@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Models\Adverisements;
+use App\Models\Comments;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -43,8 +44,8 @@ Route::group(['middleware' => ['auth', 'banned']], function() {
 
     Route::get('ad/create-ad', [AdController::class, 'createAdvert'])->name('ad.create');
     Route::post('ad/create-ad', [AdController::class, 'createAdvertPost']);
-    
-    Route::resource('comment/create', CommentController::class);
+
+    Route::post('comment/create', [CommentController::class, 'create']);
 });
 
 // АДМИНИСТРАТОРЫ
@@ -58,6 +59,7 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::post('/admin', [AdminController::class, 'userEdit'])->name('admin.userEdit');
     Route::get('/admin/ad/remove/{adverisements}', [AdController::class, 'removeAd'])->name('ad.removeAd');
     Route::post('/admin/ad/edit', [AdController::class, 'editAd'])->name('ad.editAd');
+    Route::get('/comment/delete/{comments}', [CommentController::class, 'delete']);
 });
 
 // ВЫХОД
