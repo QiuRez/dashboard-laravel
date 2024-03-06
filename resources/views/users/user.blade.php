@@ -61,7 +61,7 @@
             </div>
             <div class="py-4 px-4">
                 {{-- Комментарии --}}
-                
+                <h2 class="text-center">Комментарии</h2>
                 @include('comments.comment')
 
                 {{-- Конец комментариев --}}
