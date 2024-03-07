@@ -19,11 +19,10 @@
                             src="{{url($user->UserPhoto)}}"
                             alt="..." width="130" class="rounded mb-2 img-thumbnail">
                         {{-- <a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a> --}}
-                        <p>Username: <span class="text-bold">{{ $user->Username }}</span></p>
                     </div>
                     <div class="media-body mb-5 text-white">
-                        <h4 class="mt-0 mb-0">Mark Williams</h4>
-                        <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>New York</p>
+                        <h4 class="mt-0 mx-4 mb-0 text-dark">{{ $user->Username }}</h4>
+                        {{-- <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>New York</p> --}}
                     </div>
                 </div>
             </div>

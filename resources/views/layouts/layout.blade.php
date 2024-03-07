@@ -35,7 +35,7 @@
 			</nav>
             <div class="user-block">
                 @if ($user = Auth::user())
-                <img src="{{url($user->UserPhoto)}}" alt="Аватар">
+                <img style="cursor: pointer" src="{{url($user->UserPhoto)}}" onclick=window.location='{{ route("users.getUser", ["user" => Auth::id()]) }}' alt="Аватар">
                 <div class="user-block__action">
                     <p>{{$user->Username}}</p>
                     <a href="{{route('logOut')}}">LogOut</a>

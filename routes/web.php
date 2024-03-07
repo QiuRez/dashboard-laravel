@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth', 'banned']], function() {
     Route::post('ad/create-ad', [AdController::class, 'createAdvertPost']);
 
     Route::post('comment/create', [CommentController::class, 'create']);
+    Route::get('/comment/delete/{comments}', [CommentController::class, 'delete']);
 });
 
 // АДМИНИСТРАТОРЫ
@@ -59,7 +60,6 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::post('/admin', [AdminController::class, 'userEdit'])->name('admin.userEdit');
     Route::get('/admin/ad/remove/{adverisements}', [AdController::class, 'removeAd'])->name('ad.removeAd');
     Route::post('/admin/ad/edit', [AdController::class, 'editAd'])->name('ad.editAd');
-    Route::get('/comment/delete/{comments}', [CommentController::class, 'delete']);
 });
 
 // ВЫХОД
